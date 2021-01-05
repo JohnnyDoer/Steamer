@@ -45,6 +45,10 @@ async def on_message(message):
     if message.content.startswith("!remove"):
         pass
 
+    # Add to wishlist using Steam URL
+    if message.content.startswith("!wish URL"):
+        pass
+
     # To start the market checker.
     if message.content.startswith("!start"):
         while True:
