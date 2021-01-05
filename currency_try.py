@@ -1,15 +1,48 @@
+#!/usr/bin/python3
+# Imports from modules.
 import requests
 import json
 import time
 
 
-for i in range(100):
+# File to save data in it.
+currency_data = open("currency_data.txt", mode="w")
+
+
+# URL details.
+baseURL = "https://steamcommunity.com/market/priceoverview/"
+params = {}
+params["appid"] = "730"
+params["market_hash_name"] = "StatTrak™ P250 | Steel Disruption (Factory New)"
+
+
+# Titles
+title1 = "Steam Price"
+title2 = "Steam Number"
+
+
+# Print and write the titles.
+currency_data.writelines([title1.rjust(len(title1)+5), "\t", title2.rjust(len(title2)), "\n"])
+print(title1.rjust(len(title1)+5), "\t", title2.rjust(len(title2)))
+
+
+# Checks all numbers for currency data.
+for i in range(45):
     try:
-        URL = "https://steamcommunity.com/market/priceoverview/?currency=" + str(i) + "&appid=730&market_hash_name=StatTrak%E2%84%A2%20P250%20%7C%20Steel%20Disruption%20%28Factory%20New%29"
-        resp = requests.get(URL)
-        print(resp.json()['lowest_price'], i)
-        time.sleep(10)
+        params["currency"] = str(i)
+        resp = requests.get(baseURL, params=params)
+        price = str(resp.json()['lowest_price'])
+
+        # Printing data to the terminal.
+        print(price.rjust(len(title1)+5), "\t", str(i).rjust(len(title2)))
+
+        # Writing to data to the file.
+        currency_data.writelines([price.rjust(len(title1)+5), "\t", str(i).rjust(len(title2)), "\n"])
+        time.sleep(7)
     except :
         pass
+
+# Close the file.
+currency_data.close()
 
 # 24 is for rupees

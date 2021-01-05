@@ -4,6 +4,7 @@ import requests
 import asyncio
 import time
 from datetime import datetime
+from bs4 import BeautifulSoup as BS
 
 # Imports from files.
 from keys import client_secret, client_ID, public_key, bot_token
@@ -121,6 +122,17 @@ def addWish(message):
         msgs.append(string)
 
     return msgs
+
+def addWishURL(message):
+    msgs = []
+    wishes = open("wishlist.txt", mode="r")
+    rlines = wishes.readlines()
+    wishes.close()
+    data = message.content.replace("!wish ", "").split(", ")
+    wish_item = data[0]
+#     resp = requests.get("https://steamcommunity.com/market/listings/730/R8%20Revolver%20%7C%20Grip%20%28Field-Tested%29")
+#     soup = BS(resp.text)
+#     soup.title.text
 
 
 
